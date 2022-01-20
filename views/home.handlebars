@@ -1,41 +1,28 @@
 <main class="lista-vacantes">
-    <h2>Vacancies List</h2>
+    <h2>Positions List</h2>
 
-    <div class="vacante">
-        <div class="caja">
-            <h3>Facebook</h3>
-            <p class="puesto">React Developer</p>
-        </div>
-        <div class="caja">
-            <p class="etiqueta">Location</p>
-            <p class="nombre">Remote</p>
-        </div>
-        <div class="caja">
-            <p class="etiqueta">Contract</p>
-            <p class="nombre contrato">Full Time</p>
-        </div>
-        <div class="caja central-vertical">
-            <a href="#" class="btn btn-verde">More Info</a>
-        </div>
-    </div>
-
-    <div class="vacante">
-        <div class="caja">
-            <h3>AirBNB</h3>
-            <p class="puesto">Node Developer</p>
-        </div>
-        <div class="caja">
-            <p class="etiqueta">Location</p>
-            <p class="nombre">Remote</p>
-        </div>
-        <div class="caja">
-            <p class="etiqueta">Contract</p>
-            <p class="nombre contrato">Full Time</p>
-        </div>
-        <div class="caja central-vertical">
-            <a href="#" class="btn btn-verde">More Info</a>
-        </div>
-    </div>
-
+    {{#if positions.length}}
+        {{#each positions as | position |}}
+            <div class="vacante">
+                <div class="caja">
+                    <h3>{{position.company}}</h3>
+                    <p class="puesto">{{position.title}}</p>
+                </div>
+                <div class="caja">
+                    <p class="etiqueta">Location</p>
+                    <p class="nombre">{{position.location}}</p>
+                </div>
+                <div class="caja">
+                    <p class="etiqueta">Contract</p>
+                    <p class="nombre contrato">{{position.contract}}</p>
+                </div>
+                <div class="caja central-vertical">
+                    <a href="/positions/{{position.url}}" class="btn btn-verde">More Info</a>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <p>No Positions</p>
+    {{/if}}
 
 </main>

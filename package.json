@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/diegodjty/DevJobs#readme",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
     "concurrently": "^7.0.0",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",

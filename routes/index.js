@@ -11,7 +11,8 @@ module.exports = () =>{
     router.get('/positions/new', positionsController.newPositionForm)
     router.post('/positions/new', positionsController.addPosition)
 
-
+    // Show position
+    router.get('/positions/:url',positionsController.showPosition)
     
     return router
 }

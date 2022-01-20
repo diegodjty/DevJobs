@@ -8,7 +8,7 @@ exports.newPositionForm = (req,res)=>{
     
 }
 exports.addPosition = async (req,res)=>{
-    console.log(req.body)
+
     const position = new Positions(req.body)
 
     // create array of skills
@@ -20,4 +20,20 @@ exports.addPosition = async (req,res)=>{
 
     //redirec
     res.redirect(`/positions/${newPosition.url}`)
+}
+
+
+exports.showPosition = async (req,res,next) =>{
+
+    const position = await Positions.findOne({
+        url: req.params.url
+    })
+
+    if(!position) return next();
+    res.render('position',{
+        position,
+        pageName: position.title,
+        barra: true
+    })
+
 }

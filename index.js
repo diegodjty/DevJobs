@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 require('./config/db')
 require('dotenv').config({path:'variables.env'})
 const express = require('express');
-const { engine } = require('express-handlebars')
+const handlebars = require('handlebars');
+const exphbs = require('express-handlebars');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const router = require('./routes')
 const path = require('path')
 const cookieParser = require('cookie-parser');
@@ -18,13 +20,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
 // Enable handlebars for view
-app.engine('handlebars', engine(
-    { 
-        extname: '.handlebars', 
-        defaultLayout: "layout",
+app.engine('handlebars',
+    exphbs.engine({
+        handlebars: allowInsecurePrototypeAccess(handlebars),
+        defaultLayout: 'layout',
         helpers: require('./helpers/handlebars')
-    }
-    ));
+    })
+);
 app.set('view engine', 'handlebars')
 
 // static files
