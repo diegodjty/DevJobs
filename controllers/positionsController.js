@@ -37,3 +37,28 @@ exports.showPosition = async (req,res,next) =>{
     })
 
 }
+
+exports.editPositionForm = async (req,res,next)=>{
+    const position = await Positions.findOne({
+        url: req.params.url
+    })
+
+    if(!position) return next();
+    res.render('edit-positon',{
+        position,
+        pageName: `Edit - ${position.title}`,
+        barra: true
+    })
+}
+
+exports.editPosition = async(req,res,next)=>{
+    const updatedPosition = req.body;
+
+    updatedPosition.skills = req.body.skills.split(',')
+    const position = await Positions.findOneAndUpdate({url: req.params.url},updatedPosition,{
+        new: true,
+        runValidators: true
+    })
+
+    res.redirect(`/positions/${position.url}`)
+}

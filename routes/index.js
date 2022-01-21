@@ -13,6 +13,10 @@ module.exports = () =>{
 
     // Show position
     router.get('/positions/:url',positionsController.showPosition)
+
+    // Edit position
+    router.get('/position/edit/:url',positionsController.editPositionForm)
+    router.post('/position/edit/:url',positionsController.editPosition)
     
     return router
 }

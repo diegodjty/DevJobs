@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(skills){
         skills.addEventListener('click', addSkills);
     }
+
+    // call a function when we are editing
+    selectedSkills();
 })
 
 
@@ -17,6 +20,17 @@ const addSkills = e =>{
             e.target.classList.add('activo')
         }
     }
+
+    const skillsArray = [...skills]
+    document.querySelector('#skills').value = skillsArray
+}
+
+const selectedSkills = () =>{
+    const selected = Array.from(document.querySelectorAll('.lista-conocimientos .activo'));
+
+    selected.forEach(selected =>{
+        skills.add(selected.textContent)
+    })
 
     const skillsArray = [...skills]
     document.querySelector('#skills').value = skillsArray
