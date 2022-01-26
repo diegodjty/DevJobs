@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const homeController = require('../controllers/homeController')
 const positionsController = require('../controllers/positionsController')
+const usersController = require('../controllers/usersController')
 
 
 module.exports = () =>{
@@ -17,6 +18,14 @@ module.exports = () =>{
     // Edit position
     router.get('/position/edit/:url',positionsController.editPositionForm)
     router.post('/position/edit/:url',positionsController.editPosition)
+    
+
+    //create accounts
+    router.get('/create-account', usersController.createAccountForm)
+    router.post('/create-account', 
+        usersController.validate,
+        usersController.createAccount
+    )
     
     return router
 }

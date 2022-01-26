@@ -11,13 +11,18 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
-
-
+const flash = require('connect-flash');
+const { body, validationResult } = require('express-validator');
 
 const app = express();
 
+// Enable body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
+
+
+// Validation
+
 
 // Enable handlebars for view
 app.engine('handlebars',
@@ -40,6 +45,15 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({mongoUrl: process.env.DATABASE})
 }))
+
+// Alerts and flash messages
+app.use(flash());
+
+// create 
+app.use( (req, res, next)=>{
+    res.locals.messages = req.flash();
+    next();
+});
 
 app.use('/', router())
 

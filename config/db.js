@@ -9,3 +9,4 @@ mongoose.connection.on('error',(error)=>{
 
 // Import models
 require('../models/positions')
+require('../models/Users')

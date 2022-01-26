@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded',()=>{
+
+    //Clean alerts
+    let alerts  = document.querySelector('.alertas');
+    if(alerts){
+        cleanAlerts();
+    }
+
     const skills = document.querySelector('.lista-conocimientos');
     if(skills){
         skills.addEventListener('click', addSkills);
@@ -8,6 +15,18 @@ document.addEventListener('DOMContentLoaded',()=>{
     selectedSkills();
 })
 
+
+const cleanAlerts = () =>{
+    const alerts = document.querySelector('.alertas')
+    const interval = setInterval(()=>{
+        if(alerts.children.length > 0){
+            alerts.removeChild(alerts.children[0]);
+        }else if(alerts.children.length === 0 ){
+            alerts.parentElement.removeChild(alerts);
+            clearInterval(interval)
+        }
+    },2000);
+}
 
 const skills = new Set();
 const addSkills = e =>{
