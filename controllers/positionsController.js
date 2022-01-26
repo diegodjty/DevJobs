@@ -11,6 +11,9 @@ exports.addPosition = async (req,res)=>{
 
     const position = new Positions(req.body)
 
+    // auther of position
+    position.author = req.user._id
+
     // create array of skills
     position.skills = req.body.skills.split(',')
     

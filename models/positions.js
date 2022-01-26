@@ -38,7 +38,12 @@ const positionsSchema = new mongoose.Schema({
         name: String,
         email: String,
         resume: String
-    }]
+    }],
+    author: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Users',
+        required: 'Author is Required'
+    }
 
 
 }) 
