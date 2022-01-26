@@ -36,6 +36,8 @@ usersSchema.pre('save', async function(next){
     this.password = hash;
     next();
 })
+
+// Send alert when user exist already
 usersSchema.post('save',function(error, doc, next){
     if(error.name === 'MongoError' && error.code === 11000){
         next('Email already exist');
@@ -43,5 +45,13 @@ usersSchema.post('save',function(error, doc, next){
         next(error)
     }
 })
+
+// Authenticate Users
+usersSchema.methods={
+    comparePassword: async function(password){
+
+        return await bcrytp.compare(password, this.password)
+    }
+}
 
 module.exports = mongoose.model("Users",usersSchema)

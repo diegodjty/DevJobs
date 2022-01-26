@@ -3,7 +3,7 @@ const router = express.Router();
 const homeController = require('../controllers/homeController')
 const positionsController = require('../controllers/positionsController')
 const usersController = require('../controllers/usersController')
-
+const authController  = require('../controllers/authController')
 
 module.exports = () =>{
     router.get('/',homeController.showJobs)
@@ -26,6 +26,10 @@ module.exports = () =>{
         usersController.validate,
         usersController.createAccount
     )
+
+    // Authenticate users
+    router.get('/login', usersController.loginForm)
+    router.post('/login', authController.authenticateUser)
     
     return router
 }

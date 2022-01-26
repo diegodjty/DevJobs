@@ -13,6 +13,7 @@ const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const { body, validationResult } = require('express-validator');
+const passport = require('./config/passport')
 
 const app = express();
 
@@ -45,6 +46,10 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({mongoUrl: process.env.DATABASE})
 }))
+
+// init passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Alerts and flash messages
 app.use(flash());

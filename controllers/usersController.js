@@ -40,7 +40,7 @@ exports.createAccount = async (req,res,next)=>{
     const user = new Users(req.body);
     
     
-    if(!newUser) return next();
+    if(!user) return next();
     
     try {
         await user.save();
@@ -51,4 +51,11 @@ exports.createAccount = async (req,res,next)=>{
 
     }
 
+}
+
+// form to login
+exports.loginForm = async(req,res,next)=>{
+    res.render('login',{
+        pageName: 'Login'
+    })
 }
