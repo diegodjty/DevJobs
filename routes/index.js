@@ -22,15 +22,19 @@ module.exports = () =>{
     router.get('/positions/:url',positionsController.showPosition)
 
     // Edit position
-    router.get('/position/edit/:url',
+    router.get('/positions/edit/:url',
         authController.verifyUser,
         positionsController.editPositionForm
     )
-    router.post('/position/edit/:url',
+    router.post('/positions/edit/:url',
         authController.verifyUser,
         positionsController.editPosition
     )
     
+    // delete positions
+    router.delete('/positions/delete/:id',
+        positionsController.deletePosition
+    )
 
     //create accounts
     router.get('/create-account', usersController.createAccountForm)
@@ -56,7 +60,7 @@ module.exports = () =>{
     );
 
 
-    // Edit Progile
+    // Edit Profile
     router.get('/edit-profile',
         authController.verifyUser,
         usersController.editProfileForm
@@ -65,6 +69,7 @@ module.exports = () =>{
     router.post('/edit-profile',
     
         authController.verifyUser,
+        usersController.UploadImage,
         usersController.editProfile
     )
 

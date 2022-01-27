@@ -20,7 +20,8 @@ const usersSchema = new mongoose.Schema({
         trim: true
     },
     tokem: String,
-    expire: Date
+    expire: Date,
+    image: String
 })
 
 

@@ -69,3 +69,26 @@ exports.editPosition = async(req,res,next)=>{
     res.redirect(`/positions/${position.url}`)
 }
 
+exports.deletePosition  = async (req,res,next)=>{
+    const {id} = req.params;
+
+    const positon = await Positions.findById(id);
+    
+    if(verifyAuthor(positon,req.user)){
+        // Is the author, can delete
+        positon.remove(); 
+        res.status(200).send('Deleted correctly')
+    }else{
+        // is not the author, cannot delete
+        res.status(403).send('Error')
+    }
+
+    
+}
+
+const verifyAuthor = (position = {}, user={})=>{
+    if(!position.author.equals(user._id)){
+        return false
+    }
+    return true
+}
