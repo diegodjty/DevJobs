@@ -42,12 +42,31 @@ module.exports = () =>{
     // Authenticate users
     router.get('/login', usersController.loginForm)
     router.post('/login', authController.authenticateUser)
+
+    // Logout
+    router.get('/logout',
+        authController.verifyUser,
+        authController.logout
+    )
     
     // admin panel
     router.get('/admin', 
         authController.verifyUser,
         authController.showPanel
     );
+
+
+    // Edit Progile
+    router.get('/edit-profile',
+        authController.verifyUser,
+        usersController.editProfileForm
+    )
+
+    router.post('/edit-profile',
+    
+        authController.verifyUser,
+        usersController.editProfile
+    )
 
     return router
 }

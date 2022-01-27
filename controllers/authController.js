@@ -28,6 +28,14 @@ exports.showPanel = async (req,res)=>{
     res.render('admin',{
         pageName: 'Admin Panel',
         tagline: 'Create and manage your positions',
+        closeSession: true,
+        name: req.user.name,
         positions
     })
+}
+
+exports.logout = (req, res)=>{
+    req.logout();
+    req.flash('correcto','Logout succesfully')
+    return res.redirect('/login')
 }

@@ -3,7 +3,9 @@ const Positions = require('../models/positions')
 exports.newPositionForm = (req,res)=>{
     res.render('new-positions',{
         pageName: 'New Position',
-        tagline: 'Fill the form and publish your position'
+        tagline: 'Fill the form and publish your position',
+        closeSession: true,
+        name: req.user.name,
     })
     
 }
@@ -50,7 +52,8 @@ exports.editPositionForm = async (req,res,next)=>{
     res.render('edit-positon',{
         position,
         pageName: `Edit - ${position.title}`,
-        barra: true
+        closeSession: true,
+        name: req.user.name,
     })
 }
 
@@ -65,3 +68,4 @@ exports.editPosition = async(req,res,next)=>{
 
     res.redirect(`/positions/${position.url}`)
 }
+
