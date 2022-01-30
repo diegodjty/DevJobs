@@ -32,7 +32,7 @@ exports.showPosition = async (req,res,next) =>{
 
     const position = await Positions.findOne({
         url: req.params.url
-    })
+    }).populate('author')
 
     if(!position) return next();
     res.render('position',{

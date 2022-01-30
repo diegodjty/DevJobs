@@ -30,7 +30,8 @@ exports.showPanel = async (req,res)=>{
         tagline: 'Create and manage your positions',
         closeSession: true,
         name: req.user.name,
-        positions
+        positions,
+        image: req.user.image
     })
 }
 

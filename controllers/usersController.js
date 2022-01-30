@@ -1,5 +1,52 @@
 const Users = require("../models/Users")
 const {body,validationResult} = require('express-validator');
+const multer = require("multer");
+const shortid = require('shortid')
+
+exports.UploadImage = (req,res,next)=>{
+    upload(req,res,function(error){
+        
+        if(error){
+            if(error instanceof multer.MulterError){
+                if(error.code === 'LIMIT_FILE_SIZE'){
+                    req.flash('error','File is too big, max 100kb');
+                }else{
+                    req.flash('error',error.message)
+                }
+           }else{
+               req.flash('error',error.message)
+           }
+           res.redirect('/admin');
+           return;
+        }else{
+            next();
+        }
+    })
+}
+const multerConfig = {
+    limits: {fileSize: 100000},
+    storage : fileStorage = multer.diskStorage({
+        destination: (req, file, cb)=>{
+            cb(null,__dirname+'../../public/uploads/profile');
+        },
+        filename: (req,file,cb)=>{
+            const extension = file.mimetype.split('/')[1];
+            cb(null,`${shortid.generate()}.${extension}`)
+        },
+        fileFilter:(req,file,cb)=>{
+            if(file.mimetype==='image/jpeg' || file.mimetype== 'image/png'){
+                // if supported mimetype 
+                cb(null, true)
+            }else{
+                cb(new Error('Format Not Valid'), false)
+            }
+        }
+        
+    })
+}
+const upload = multer(multerConfig).single('image');
+
+
 
 exports.createAccountForm = (req,res,next)=>{
     res.render('create-account',{
@@ -76,9 +123,13 @@ exports.editProfile = async (req,res)=>{
     user.email = req.body.email;
 
     if(req.body.password){
-        user.password = req.body.password
+        user.password = req.body.password;
     }
 
+    if(req.file){
+        user.image = req.file.filename;
+    }
+  
     await user.save();
 
     req.flash('correcto', 'Saved succesfully')
