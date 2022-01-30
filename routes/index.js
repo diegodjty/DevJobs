@@ -73,6 +73,18 @@ module.exports = () =>{
         usersController.editProfile
     )
 
+    // Recieve messages from candidates
+    router.post('/positions/:url',
+        positionsController.uploadResume,
+        positionsController.contact
+    )
+
+    // Show candidate by position
+    router.get('/candidates/:id',
+        authController.verifyUser,
+        positionsController.showCandidates
+    )
+
     return router
 }
 

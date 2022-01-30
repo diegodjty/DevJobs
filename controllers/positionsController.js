@@ -1,4 +1,6 @@
 const Positions = require('../models/positions')
+const multer = require('multer')
+const shortid = require('shortid')
 
 exports.newPositionForm = (req,res)=>{
     res.render('new-positions',{
@@ -91,4 +93,82 @@ const verifyAuthor = (position = {}, user={})=>{
         return false
     }
     return true
+}
+
+// Upload Resume
+exports.uploadResume = (req,res,next)=>{
+    upload(req,res,function(error){
+        
+        if(error){
+            if(error instanceof multer.MulterError){
+                if(error.code === 'LIMIT_FILE_SIZE'){
+                    req.flash('error','File is too big, max 300kb');
+                }else{
+                    req.flash('error',error.message)
+                }
+           }else{
+               req.flash('error',error.message)
+           }
+           res.redirect('back');
+           return;
+        }else{
+            next();
+        }
+    })
+}
+const multerConfig = {
+    limits: {fileSize: 300000},
+    storage : fileStorage = multer.diskStorage({
+        destination: (req, file, cb)=>{
+            cb(null,__dirname+'../../public/uploads/resume');
+        },
+        filename: (req,file,cb)=>{
+            const extension = file.mimetype.split('/')[1];
+            cb(null,`${shortid.generate()}.${extension}`)
+        },
+        fileFilter:(req,file,cb)=>{
+            if(file.mimetype==='application/pdf'){
+                // if supported mimetype 
+                cb(null, true)
+            }else{
+                cb(new Error('Format Not Valid'), false)
+            }
+        }
+        
+    })
+}
+const upload = multer(multerConfig).single('resume');
+
+exports.contact = async (req,res,next)=>{
+    const position = await Positions.findOne({url: req.params.url});
+
+    if(!position) return next();
+
+    const newCandidate  = {
+        name: req.body.name,
+        email: req.body.email,
+        resume: req.file.filename
+    }
+
+    // Save to DB
+    position.candidates.push(newCandidate);
+    await position.save();
+
+    req.flash('correcto', 'Resume Sent Succesfully');
+    res.redirect('/')
+}
+
+exports.showCandidates = async(req,res,next)=>{
+    const position = await Positions.findById(req.params.id);
+
+    if(position.author != req.user._id.toString()){
+        return next();
+    }
+    if(!position) return next();
+    res.render('candidates',{
+        pageName: `Candidates Position = ${position.title}`,
+        logout: false,
+        name: req.user.name,
+        candidates: position.candidates
+    })
 }

@@ -24,7 +24,7 @@
         <div class="vacante-descripcion">
             {{{position.description}}}
         </div>
-        <a href="/position/edit/{{position.url}}" class="btn btn-azul editar-btn">Edit</a>
+        <a href="/positions/edit/{{position.url}}" class="btn btn-azul editar-btn">Edit</a>
     </main>
     <aside class="sidebar">
         <h2>Requirements</h2>
@@ -38,7 +38,25 @@
 
 <div class="contenedor datos-reclutador">
     <div class="enviar-datos">
-        
+        <h2>Contact Recruiter</h2>
+        <p>Fill this form, upload ur Resume and we will contact you</p>
+        <form action="/positions/{{position.url}}" class="default-form" method="post" enctype="multipart/form-data">
+            <div class="campo">
+                <label >Name</label>
+                <input type="text" name="name" placeholder="Name">
+            </div>
+            <div class="campo">
+                <label >E-mail</label>
+                <input type="text" name="email" placeholder="E-mail">
+            </div>
+            <div class="campo">
+                <label for="">Resume (PDF)</label>
+                <input type="file" name="resume" >
+            </div>
+            <div class="campo">
+                <input type="submit" value="Submit" class="btn btn-verde">
+            </div>
+        </form>
     </div>
     <div class="info-reclutador">
         <h2>Informacion Reclutador</h2>

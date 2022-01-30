@@ -13,12 +13,13 @@
                     <div class="caja">
                         <h3>{{position.company}}</h3>
                         <p class="puesto">{{position.title}}</p>
+                        <p class="candidatos">{{position.candidates.length}} Candidates</p>
                     </div>
                     <div class="centrar-vertical caja">
                         <a href="/candidates/{{position.id}}" class="btn btn-amarillo">Candidates</a>
                     </div>
                     <div class="centrar-vertical caja">
-                        <a href="/positions/edit/{{position.url}}" class="btn btn-verde">Edit</a>
+                        <a href="/positions/edit/{{positions.url}}" class="btn btn-verde">Edit</a>
                     </div>
                     <div class="centrar-vertical caja">
                         <a href="#" data-delete={{position.id}} class="btn btn-rojo">Delete</a>
