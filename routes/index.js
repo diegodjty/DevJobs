@@ -52,6 +52,14 @@ module.exports = () =>{
         authController.verifyUser,
         authController.logout
     )
+
+    // reset password
+    router.get('/reset-password',authController.resetPasswordForm)
+    router.post('/reset-password',authController.sendToken)
+
+    // reset password, save in DB
+    router.get('/reset-password/:token',authController.resetPassword)
+    router.post('/reset-password/:token',authController.savePassword)
     
     // admin panel
     router.get('/admin', 
