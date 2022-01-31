@@ -93,6 +93,9 @@ module.exports = () =>{
         positionsController.showCandidates
     )
 
+    // Positions Search
+    router.post('/search',positionsController.searchPosition)
+
     return router
 }
 

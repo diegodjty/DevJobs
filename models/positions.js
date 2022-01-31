@@ -58,4 +58,7 @@ positionsSchema.pre('save', function(next){
     next()
 })
 
+// Create an index
+positionsSchema.index({title:'text'});
+
 module.exports = mongoose.model('Positions',positionsSchema)

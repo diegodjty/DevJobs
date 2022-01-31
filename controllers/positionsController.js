@@ -172,3 +172,17 @@ exports.showCandidates = async(req,res,next)=>{
         candidates: position.candidates
     })
 }
+
+exports.searchPosition = async(req,res)=>{
+    const positions = await Positions.find({
+        $text:{
+            $search: req.body.q
+        }
+    })
+
+    res.render('home',{
+        pageName: `Search results: ${req.body.q}`,
+        barra: true,
+        positions
+    })
+}
